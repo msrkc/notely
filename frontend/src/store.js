@@ -1,8 +1,8 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
-import * as auth from './auth';
-import { http } from './http';
-import moment from 'moment';
+import Vue from "vue";
+import Vuex from "vuex";
+import * as auth from "./auth";
+import { http } from "./http";
+import moment from "moment";
 
 Vue.use(Vuex);
 
@@ -24,11 +24,10 @@ export default new Vuex.Store({
   getters: {
     notes(state) {
       const dateToString = date => {
-        return moment(date).format('YYYYMDhmmss');
+        return moment(date).format("YYYYDMhmmss");
       };
       return state.notes.sort((a, b) => {
-        console.log();
-        return dateToString(b['lastSaved']) - dateToString(a['lastSaved']);
+        return dateToString(b["lastSaved"]) - dateToString(a["lastSaved"]);
       });
     },
     note(state) {
@@ -36,15 +35,15 @@ export default new Vuex.Store({
     },
     lastSaved(state) {
       if (!state.note.lastSaved) {
-        return 'Never';
+        return "Never";
       }
       return moment(state.note.lastSaved).calendar();
     },
     wordCount(state) {
-      if (!state.note.body || state.note.body.trim() === '') {
+      if (!state.note.body || state.note.body.trim() === "") {
         return 0;
       }
-      return state.note.body.trim().split(' ').length;
+      return state.note.body.trim().split(" ").length;
     }
   },
   mutations: {
@@ -97,29 +96,29 @@ export default new Vuex.Store({
   actions: {
     getNotes({ commit }) {
       return http()
-        .get('/note')
+        .get("/note")
         .then(notes => {
-          commit('SET_NOTES', notes.data.notes);
+          commit("SET_NOTES", notes.data.notes);
         });
     },
     openNote({ commit }, note) {
-      commit('SET_CURRENT_NOTE', note);
+      commit("SET_CURRENT_NOTE", note);
     },
     saveNote({ commit, dispatch, state }) {
-      commit('TOUCH_LAST_SAVED');
-      if (typeof state.note._id === 'undefined') {
-        commit('PREPEND_TO_NOTES', state.note);
-        commit('SET_CURRENT_NOTE_ID', Date.now());
-        dispatch('postNote', {
+      commit("TOUCH_LAST_SAVED");
+      if (typeof state.note._id === "undefined") {
+        commit("PREPEND_TO_NOTES", state.note);
+        commit("SET_CURRENT_NOTE_ID", Date.now());
+        dispatch("postNote", {
           note: {
             title: state.note.title,
             body: state.note.body
           }
         }).then(({ data }) => {
-          commit('SET_CURRENT_NOTE_ID', data.note._id);
+          commit("SET_CURRENT_NOTE_ID", data.note._id);
         });
       }
-      dispatch('patchNote', {
+      dispatch("patchNote", {
         note: {
           _id: state.note._id,
           title: state.note.title,
@@ -129,39 +128,39 @@ export default new Vuex.Store({
       });
     },
     postNote({ state }, post) {
-      return http().post('/note', post);
+      return http().post("/note", post);
     },
     patchNote({ state }, patch) {
-      return http().patch('/note', patch);
+      return http().patch("/note", patch);
     },
     deleteNote({ state, commit }, id) {
-      if (confirm('Are you sure?')) {
+      if (confirm("Are you sure?")) {
         http()
           .delete(`/note/${id}`)
-          .then(() => commit('DELETE_NOTE', id));
+          .then(() => commit("DELETE_NOTE", id));
       }
     },
     authenticate({ commit }) {
-      commit('AUTHENTICATE');
+      commit("AUTHENTICATE");
     },
     clearCurrentNote({ commit, dispatch }) {
-      dispatch('stopSaveTimeout');
-      commit('SET_CURRENT_NOTE', null);
+      dispatch("stopSaveTimeout");
+      commit("SET_CURRENT_NOTE", null);
     },
     startSaveTimeout({ commit, dispatch, state }) {
       if (state.saveTimeout !== null) {
         return;
       }
-      commit('SET_SAVE_TIMEOUT', {
+      commit("SET_SAVE_TIMEOUT", {
         callback() {
-          dispatch('saveNote');
-          dispatch('stopSaveTimeout');
+          dispatch("saveNote");
+          dispatch("stopSaveTimeout");
         },
         delay: 1000
       });
     },
     stopSaveTimeout({ commit }) {
-      commit('CLEAR_SAVE_TIMEOUT');
+      commit("CLEAR_SAVE_TIMEOUT");
     }
   }
 });

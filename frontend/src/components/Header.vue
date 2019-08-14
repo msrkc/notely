@@ -18,12 +18,19 @@
         <div class="header__dropdown" v-if="dropdown">
           <a href="#" @click.prevent="logout">Logout</a>
           <a
+            href="https://twitter.com/murats"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Follow me
+          </a>
+          <a
             href="http://github.com/msrkc/notely"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Source Code</a
-          >
+            Source Code
+          </a>
         </div>
       </div>
     </div>
@@ -64,7 +71,7 @@ export default {
   &__username {
     cursor: pointer;
     position: relative;
-    text-align: right;
+    justify-self:flex-end;
   }
 
   &__left {
@@ -92,7 +99,7 @@ export default {
   }
 
   &__dropdown {
-    positon: absolute;
+    position: absolute;
     background: white-color;
     width: 15rem;
     margin-top: 1rem;
@@ -103,6 +110,10 @@ export default {
     font-size: 1.4rem;
     display: flex;
     flex-direction: column;
+    z-index:2;
+    height:auto;
+    overflow:hidden;
+    right:0;
 
     a {
       color: default-color;
