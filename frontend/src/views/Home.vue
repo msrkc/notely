@@ -13,32 +13,46 @@
         :class="[current === 'login' ? 'mt-5' : 'mt-3']"
       >
         <div class="home__content--box" v-if="current === 'login'">
-          <label for="username">Username</label>
-          <input type="text" id="username" v-model="login.username" />
-          <label for="password">Password</label>
-          <input type="password" id="password" v-model="login.password" />
-          <span class="error" v-if="error">{{ error }}</span>
-          <button @click="onLogin">login</button>
-          <a @click.prevent="current = 'register'" class="login-link">
-            go to register
-            <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
-          </a>
+          <form @submit.prevent="onLogin">
+            <label for="username">Username</label>
+            <input type="text" id="username" v-model="login.username" />
+            <label for="password">Password</label>
+            <input type="password" id="password" v-model="login.password" />
+            <span class="error" v-if="error">{{ error }}</span>
+            <button>
+              <loading-svg color="#FFF" v-if="onProcess"></loading-svg>
+              <template v-else>
+                login
+              </template>
+            </button>
+            <a @click.prevent="current = 'register'" class="login-link">
+              go to register
+              <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+            </a>
+          </form>
         </div>
         <div class="home__content--box" v-else>
-          <label for="username">Username</label>
-          <input v-model="register.username" type="text" id="username" />
-          <label for="password">Password</label>
-          <input v-model="register.password" type="password" id="password" />
-          <label for="name">Name</label>
-          <input v-model="register.name" type="text" id="name" />
-          <label for="email">E-mail</label>
-          <input v-model="register.email" type="email" id="email" />
-          <span class="error" v-if="error">{{ error }}</span>
-          <button @click="onRegister">register</button>
-          <a @click.prevent="current = 'login'" class="login-link">
-            <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
-            back to login
-          </a>
+          <form @submit.prevent="onRegister">
+            <label for="username">Username</label>
+            <input v-model="register.username" type="text" id="username" />
+            <label for="password">Password</label>
+            <input v-model="register.password" type="password" id="password" />
+            <label for="name">Name</label>
+            <input v-model="register.name" type="text" id="name" />
+            <label for="email">E-mail</label>
+            <input v-model="register.email" type="email" id="email" />
+            <span class="error" v-if="error">{{ error }}</span>
+            <button>
+              <loading-svg color="#FFF" v-if="onProcess"></loading-svg>
+              <template v-else>
+                register
+              </template>
+            </button>
+            <a @click.prevent="current = 'login'" class="login-link">
+              <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
+              back to login
+            </a>
+          </form>
         </div>
       </div>
     </div>
@@ -55,10 +69,13 @@
 
 <script>
 import * as auth from "../auth";
+import loadingSvg from "@/components/ui/loadingSvg.vue";
 export default {
   name: "AppHome",
+  components: { loadingSvg },
   data: () => ({
     current: "login",
+    onProcess: false,
     error: null,
     login: {
       username: "",
@@ -74,20 +91,22 @@ export default {
 
   methods: {
     onLogin() {
+      this.onProcess = true;
       const user = {
         username: this.login.username,
         password: this.login.password
       };
-
       auth
         .login(user)
         .then(() => this.$router.push({ name: "notes" }))
         .catch(_ => {
+          this.onProcess = false;
           this.clearError();
           this.error = "Please check your email and password.";
         });
     },
     onRegister() {
+      this.onProcess = true;
       const user = {
         username: this.register.username,
         password: this.register.password,
@@ -97,19 +116,22 @@ export default {
       if (!this.validEmail(user.email)) {
         this.error = "Your email address is not valid!";
         this.clearError();
+        this.onProcess = false;
         return;
       }
       auth
         .registerUser(user)
         .then(() => this.$router.push({ name: "notes" }))
         .catch(error => {
-          this.clearFields(this.register);
-          if (error.response.status) {
+          if (error.response.status === 422) {
             this.error = "Username is taken";
             this.clearError();
+            this.onProcess = false;
           } else {
             this.error = "Please check fields.";
             this.clearError();
+            this.clearFields(this.register);
+            this.onProcess = false;
           }
         });
     },
@@ -172,46 +194,49 @@ export default {
       width: 30rem;
       border-radius: 10px;
       text-align: left;
-      display: flex;
-      flex-direction: column;
 
-      .error {
-        color: red;
-        font-size: 1.2rem;
-        margin-bottom: 1rem;
-      }
+      form {
+        display: flex;
+        flex-direction: column;
 
-      label {
-        text-transform: uppercase;
-        padding-left: 0.5rem;
-        font-size: 1.2rem;
-        color: gray-dark-color;
-      }
+        .error {
+          color: red;
+          font-size: 1.2rem;
+          margin-bottom: 1rem;
+        }
 
-      button {
-        border-radius: 10px;
-        height: 4.5rem;
-        outline: none;
-        border: none;
-        background: orange-bold-color;
-        color: white-color;
-        font-family: inherit;
-        font-size: 1.6rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        cursor: pointer;
-      }
+        label {
+          text-transform: uppercase;
+          padding-left: 0.5rem;
+          font-size: 1.2rem;
+          color: gray-dark-color;
+        }
 
-      input {
-        border-radius: 10px;
-        height: 4.5rem;
-        outline: none;
-        border: none;
-        background: orange-light-color;
-        font-family: inherit;
-        padding: 1rem 2rem;
-        margin-bottom: 2rem;
-        font-size: 1.6rem;
+        button {
+          border-radius: 10px;
+          height: 4.5rem;
+          outline: none;
+          border: none;
+          background: orange-bold-color;
+          color: white-color;
+          font-family: inherit;
+          font-size: 1.6rem;
+          font-weight: 700;
+          text-transform: uppercase;
+          cursor: pointer;
+        }
+
+        input {
+          border-radius: 10px;
+          height: 4.5rem;
+          outline: none;
+          border: none;
+          background: orange-light-color;
+          font-family: inherit;
+          padding: 1rem 2rem;
+          margin-bottom: 2rem;
+          font-size: 1.6rem;
+        }
       }
     }
 

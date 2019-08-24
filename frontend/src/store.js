@@ -24,7 +24,7 @@ export default new Vuex.Store({
   getters: {
     notes(state) {
       const dateToString = date => {
-        return moment(date).format("YYYYDMhmmss");
+        return Number(String(moment(date).format("YYYYDMhmmss")).slice(0,10));
       };
       return state.notes.sort((a, b) => {
         return dateToString(b["lastSaved"]) - dateToString(a["lastSaved"]);
