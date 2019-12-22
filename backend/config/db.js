@@ -9,7 +9,7 @@ const dbUrl =
 const connectToDB = () => {
   mongoose.connect(
     dbUrl,
-    { useCreateIndex: true, useNewUrlParser: true },
+    { useCreateIndex: true, useNewUrlParser: true,  useUnifiedTopology: true },
     error => {
       if (error) {
         console.log("cannot to connect");
