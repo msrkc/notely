@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div class="home__logo" :class="[current === 'login' ? 'mt-5' : 'mt-3']">
-      <strong>Notely</strong> xyz
+      <strong>Notely</strong>
     </div>
     <div class="home__content">
       <h1>
@@ -154,120 +154,103 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.mt-5 {
-  margin-top: 5rem;
-}
+.mt-5
+  margin-top 5rem
 
-.mt-3 {
-  margin-top: 3rem;
-}
+.mt-3
+  margin-top 3rem
 
-.home {
-  background: bg-color;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
+.home
+  background bg-color
+  min-height 100vh
+  display flex
+  align-items center
+  flex-direction column
 
-  &__logo {
-    font-size: 5rem;
-    color: orange-bold-color;
+  &__logo
+    font-size 5rem
+    color orange-bold-color
 
-    strong {
-      color: default-color;
-    }
-  }
+    strong
+      color default-color
 
-  &__content {
-    text-align: center;
+  &__content
+    text-align center
 
-    &-boxes {
-      display: flex;
-      flex-direction: row;
-      margin-bottom: 3rem;
-    }
+    &-boxes
+      display flex
+      flex-direction row
+      margin-bottom 3rem
 
-    &--box {
-      border: 1px solid orange-bold-color;
-      padding: 2rem;
-      margin: 0 5rem;
-      width: 30rem;
-      border-radius: 10px;
-      text-align: left;
+    &--box
+      border 1px solid orange-bold-color
+      padding 2rem
+      margin 0 5rem
+      width 30rem
+      border-radius 10px
+      text-align left
 
-      form {
-        display: flex;
-        flex-direction: column;
+      form
+        display flex
+        flex-direction column
 
-        .error {
-          color: red;
-          font-size: 1.2rem;
-          margin-bottom: 1rem;
-        }
+        .error
+          color red
+          font-size 1.2rem
+          margin-bottom 1rem
 
-        label {
-          text-transform: uppercase;
-          padding-left: 0.5rem;
-          font-size: 1.2rem;
-          color: gray-dark-color;
-        }
+        label
+          text-transform uppercase
+          padding-left 0.5rem
+          font-size 1.2rem
+          color gray-dark-color
 
-        button {
-          border-radius: 10px;
-          height: 4.5rem;
-          outline: none;
-          border: none;
-          background: orange-bold-color;
-          color: white-color;
-          font-family: inherit;
-          font-size: 1.6rem;
-          font-weight: 700;
-          text-transform: uppercase;
-          cursor: pointer;
-        }
+        button
+          border-radius 10px
+          height 4.5rem
+          outline none
+          border none
+          background orange-bold-color
+          color white-color
+          font-family inherit
+          font-size 1.6rem
+          font-weight 700
+          text-transform uppercase
+          cursor pointer
 
-        input {
-          border-radius: 10px;
-          height: 4.5rem;
-          outline: none;
-          border: none;
-          background: orange-light-color;
-          font-family: inherit;
-          padding: 1rem 2rem;
-          margin-bottom: 2rem;
-          font-size: 1.6rem;
-        }
-      }
-    }
+        input
+          border-radius 10px
+          height 4.5rem
+          outline none
+          border none
+          background orange-light-color
+          font-family inherit
+          padding 1rem 2rem
+          margin-bottom 2rem
+          font-size 1.6rem
 
-    h1 {
-      font-weight: 200;
-      color: gray-light-color;
-      margin: 0;
-      padding: 0;
-    }
-  }
+    h1
+      font-weight 200
+      color gray-light-color
+      margin 0
+      padding 0
 
-  .login-link {
-    text-align: center;
-    margin-top: 1rem;
-    font-size: 1.1rem;
-    cursor: pointer;
-  }
+  .login-link
+    text-align center
+    margin-top 1rem
+    font-size 1.1rem
+    cursor pointer
 
-  .fork {
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    font-size: 1.3rem;
-    background: orange-bold-color;
-    padding: 0.5rem 1rem;
-    border-top-left-radius: 10px;
+  .fork
+    position fixed
+    bottom 0
+    right 0
+    font-size 1.3rem
+    background orange-bold-color
+    padding 0.5rem 1rem
+    border-top-left-radius 10px
 
-    a {
-      text-decoration: none;
-      color: white-color;
-    }
-  }
-}
+    a
+      text-decoration none
+      color white-color
 </style>

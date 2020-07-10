@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <div class="header__left">
-      <div class="header__logo"><strong>Notely</strong> xyz</div>
+      <div class="header__logo"><strong>Notely</strong></div>
       <i
         class="fa fa-pencil-square-o header__left--new"
         aria-hidden="true"
@@ -60,74 +60,65 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.header {
-  display: flex;
-  height: 5rem;
-  background-color: bg-color;
-  border-bottom: 5px solid white-color;
-  font-size: 2rem;
-  color: orange-bold-color;
+.header
+  display flex
+  height 5rem
+  background-color bg-color
+  border-bottom 5px solid white-color
+  font-size 2rem
+  color orange-bold-color
 
-  &__username {
-    cursor: pointer;
-    position: relative;
-    justify-self:flex-end;
-  }
+  &__username
+    cursor pointer
+    position relative
+    justify-self flex-end
 
-  &__left {
-    min-width: 28%;
-    padding-left: 3rem;
-    border-right: 5px solid white-color;
-    padding-top: 1.3rem;
-    justify-content: space-between;
-    display: flex;
+  &__left
+    min-width 28%
+    padding-left 3rem
+    border-right 5px solid white-color
+    padding-top 1.3rem
+    justify-content space-between
+    display flex
 
-    &--new {
-      margin-right: 2rem;
-      cursor: pointer;
-    }
-  }
+    &--new
+      margin-right 2rem
+      cursor pointer
 
-  &__right {
-    width: 82%;
-    display: flex;
-    justify-content: flex-end;
-    padding-top: 1.5rem;
-    padding-right: 2rem;
-    font-size: 1.7rem;
-    font-weight: 700;
-  }
+  &__right
+    width 82%
+    display flex
+    justify-content flex-end
+    padding-top 1.5rem
+    padding-right 2rem
+    font-size 1.7rem
+    font-weight 700
 
-  &__dropdown {
-    position: absolute;
-    background: white-color;
-    width: 15rem;
-    margin-top: 1rem;
-    font-weight: 500;
-    border-radius: 10px;
-    border: 1px solid orange-light-color;
-    text-align: left;
-    font-size: 1.4rem;
-    display: flex;
-    flex-direction: column;
-    z-index:2;
-    height:auto;
-    overflow:hidden;
-    right:0;
+  &__dropdown
+    position absolute
+    background white-color
+    width 15rem
+    margin-top 1rem
+    font-weight 500
+    border-radius 10px
+    border 1px solid orange-light-color
+    text-align left
+    font-size 1.4rem
+    display flex
+    flex-direction column
+    z-index 2
+    height auto
+    overflow hidden
+    right 0
 
-    a {
-      color: default-color;
-      text-decoration: none;
-      padding: 1rem 2rem;
+    a
+      color default-color
+      text-decoration none
+      padding 1rem 2rem
 
-      &:hover {
-        background: orange-light-color;
-      }
-    }
-  }
-}
+      &:hover
+        background orange-light-color
 
-strong {
-  color: default-color;
-}
+strong
+  color default-color
 </style>
